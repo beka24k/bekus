@@ -6,7 +6,7 @@ import java.util.Stack;
  * @param <K> the type of keys stored in the BST.
  * @param <V> the type of values associated with the keys in the BST.
  */
-public class BST<K extends Comparable<K>, V>{
+public class BST<K extends Comparable<K>, V>  {
 
     /**
      * Node class representing a node in the BST.
@@ -30,6 +30,26 @@ public class BST<K extends Comparable<K>, V>{
             this.key = key;
             left = right = null;
         }
+    }
+
+    private Node<K, V> root;
+    private int size;
+
+    /**
+     * Constructs an empty BST.
+     */
+    public BST() {
+        root = null;
+        size = 0;
+    }
+
+    /**
+     * Returns the number of elements in the BST.
+     *
+     * @return the size of the BST.
+     */
+    public int size() {
+        return size;
     }
 
 
