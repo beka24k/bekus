@@ -113,7 +113,59 @@ public class BST<K extends Comparable<K>, V> implements Iterable<K> {
         return node.data;
     }
 
+    /**
+     * Removes the node with the given key from the BST.
+     *
+     * @param current the current node being visited.
+     * @param key     the key to remove.
+     * @return the modified subtree after removal.
+     */
+    private Node<K, V> remove(Node<K, V> current, K key) {
+        if (current == null)
+            return null;
+        if (key.compareTo(current.key) < 0) {
+            current.left = remove(current.left, key);
+        } else if (key.compareTo(current.key) > 0) {
+            current.right = remove(current.right, key);
+        } else {
+            if (current.left == null && current.right == null) {
+                return null;
+            }
+            if (current.left == null) {
+                return current.right;
+            }
+            if (current.right == null) {
+                return current.left;
+            }
+            K smallestValue = findSmallestValue(current.right);
+            current.data = (V) smallestValue;
+            current.right = remove(current.right, smallestValue);
+        }
+        return current;
+    }
 
+    /**
+     * Finds the smallest value in the given subtree.
+     *
+     * @param current the current node being visited.
+     * @return the smallest value in the subtree.
+     */
+    private K findSmallestValue(Node<K, V> current) {
+        if (current.left == null) {
+            return current.key;
+        }
+        return findSmallestValue(current.left);
+    }
+
+    /**
+     * Removes the node with the given key from the BST.
+     *
+     * @param key the key to remove.
+     */
+    public void delete(K key) {
+        root = remove(root, key);
+        size--;
+    }
 
     @Override
     public Iterator<K> iterator() {
