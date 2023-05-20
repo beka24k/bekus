@@ -6,7 +6,7 @@ import java.util.Stack;
  * @param <K> the type of keys stored in the BST.
  * @param <V> the type of values associated with the keys in the BST.
  */
-public class BST<K extends Comparable<K>, V>  {
+public class BST<K extends Comparable<K>, V> implements Iterable<K> {
 
     /**
      * Node class representing a node in the BST.
@@ -53,4 +53,58 @@ public class BST<K extends Comparable<K>, V>  {
     }
 
 
+
+    @Override
+    public Iterator<K> iterator() {
+        return new BSTIterator();
+    }
+
+    /**
+     * Iterator class for iterating over the keys in the BST.
+     */
+    private class BSTIterator implements Iterator<K> {
+        private Stack<Node<K, V>> stack;
+
+        /**
+         * Constructs a new iterator for the BST.
+         */
+        public BSTIterator() {
+            stack = new Stack<>();
+            pushLeftNodes(root);
+        }
+
+        /**
+         * maker inorder traversal method
+         * @param root the root node of BST
+         */
+        public void inOrder(Node root) {
+            if(root==null)return ;
+            inOrder(root.left);
+            System.out.println(root.data+" ");
+            inOrder(root.right);
+        }
+        /**
+         * Helper method to push all left nodes of a subtree onto the stack.
+         *
+         * @param node the root node of the subtree.
+         */
+        private void pushLeftNodes(Node<K, V> node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        @Override
+        public K next() {
+            Node<K, V> node = stack.pop();
+            pushLeftNodes(node.right);
+            return node.key;
+        }
+    }
 }
