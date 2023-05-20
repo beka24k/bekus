@@ -81,6 +81,38 @@ public class BST<K extends Comparable<K>, V> implements Iterable<K> {
         size++;
     }
 
+    /**
+     * Recursively searches for a node with the given key in the BST.
+     *
+     * @param current the current node being visited.
+     * @param key     the key to search for.
+     * @return the node with the given key, or null if not found.
+     */
+    private Node<K, V> getNode(Node<K, V> current, K key) {
+        if (current == null || key.compareTo(current.key) == 0) {
+            return current;
+        }
+        if (key.compareTo(current.key) < 0) {
+            return getNode(current.left, key);
+        } else {
+            return getNode(current.right, key);
+        }
+    }
+
+    /**
+     * Retrieves the value associated with the given key from the BST.
+     *
+     * @param key the key to search for.
+     * @return the value associated with the key, or null if the key is not found.
+     */
+    public V get(K key) {
+        Node<K, V> node = getNode(root, key);
+        if (node == null) {
+            return null;
+        }
+        return node.data;
+    }
+
 
 
     @Override
