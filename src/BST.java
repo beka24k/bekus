@@ -52,6 +52,35 @@ public class BST<K extends Comparable<K>, V> implements Iterable<K> {
         return size;
     }
 
+    /**
+     * Inserts a key-value pair into the BST.
+     *
+     * @param key the key to insert.
+     * @param val the value associated with the key.
+     */
+    private Node<K, V> insert(Node<K, V> current, K key, V val) {
+        if (current == null) {
+            return new Node<>(val, key);
+        }
+        if (key.compareTo(current.key) < 0) {
+            current.left = insert(current.left, key, val);
+        } else {
+            current.right = insert(current.right, key, val);
+        }
+        return current;
+    }
+
+    /**
+     * Inserts a key-value pair into the BST.
+     *
+     * @param key the key to insert.
+     * @param val the value associated with the key.
+     */
+    public void put(K key, V val) {
+        root = insert(root, key, val);
+        size++;
+    }
+
 
 
     @Override
