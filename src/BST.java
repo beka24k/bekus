@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.Stack;
+
 /**
  * Binary Search Tree implementation.
  *
@@ -167,6 +168,26 @@ public class BST<K extends Comparable<K>, V> implements Iterable<K> {
         size--;
     }
 
+    //defense
+    public boolean consist(K key) {
+        Node node = consist(root, key);
+        if (node == null) {
+            return false;
+        }
+        return true;
+    }
+
+    private Node<K, V> consist(Node current, K key) {
+        if (current == null || key.compareTo((K) current.key) == 0) {
+            return current;
+        }
+        if (key.compareTo((K) current.key) < 0) {
+            return getNode(current.left, key);
+        } else {
+            return getNode(current.right, key);
+        }
+    }
+
     @Override
     public Iterator<K> iterator() {
         return new BSTIterator();
@@ -188,14 +209,16 @@ public class BST<K extends Comparable<K>, V> implements Iterable<K> {
 
         /**
          * maker inorder traversal method
+         *
          * @param root the root node of BST
          */
         public void inOrder(Node root) {
-            if(root==null)return ;
+            if (root == null) return;
             inOrder(root.left);
-            System.out.println(root.data+" ");
+            System.out.println(root.data + " ");
             inOrder(root.right);
         }
+
         /**
          * Helper method to push all left nodes of a subtree onto the stack.
          *
