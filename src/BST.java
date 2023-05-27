@@ -182,9 +182,9 @@ public class BST<K extends Comparable<K>, V> implements Iterable<K> {
             return current;
         }
         if (key.compareTo((K) current.key) < 0) {
-            return getNode(current.left, key);
+            return consist(current.left, key);
         } else {
-            return getNode(current.right, key);
+            return consist(current.right, key);
         }
     }
 
